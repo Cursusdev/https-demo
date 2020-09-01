@@ -3,7 +3,8 @@ services:
 
   app:
     # build: ./app
-    container_name: app
+    # container_name: app
+    image: eu.gcr.io/${PROJECT_ID}/https-nodejs_app
     ports:
       - "8080:8080"
       # - "80:8080"
@@ -15,7 +16,8 @@ services:
 
   certbot:
     # build: ./certbot
-    container_name: certbot
+    # container_name: certbot
+    image: eu.gcr.io/${PROJECT_ID}/https-nodejs_cerbot
     restart: always
     volumes:
       - certbot-webroot-ethprod:/webroots/ethprod.xyz/.well-known
