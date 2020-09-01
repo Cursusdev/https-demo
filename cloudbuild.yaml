@@ -1,8 +1,8 @@
 steps:
 
   # Run the app and dependencies in the background using docker-compose.
-  - name: 'docker/compose:latest'
-    args: ['up', '-d'],
+  - name: 'docker/compose:1.19.0'
+    args: ['up', '-d']
 
   # push to the registry
   - name: 'gcr.io/cloud-builders/docker'
