@@ -35,8 +35,3 @@ services:
 volumes:
   certbot-webroot-ethprod:
   certbot-letsencrypt:
-
-networks:
-  default:
-    external:
-      name: cloudbuild
