@@ -8,7 +8,7 @@ steps:
 
   - id: 'build webroot'
     name: gcr.io/cloud-builders/docker
-    args: ['build', '-f', './certbot/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot', 'web/.']
+    args: ['build', '-f', './certbot/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot', 'certbot/.']
     waitFor: ['build webapp']
 
   # Run the app and dependencies in the background using docker-compose.
