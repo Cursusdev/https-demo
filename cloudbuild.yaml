@@ -1,20 +1,28 @@
 steps:
 
   # Build the Docker image.
-  - name: 'docker/compose:latest'
-    args: ['build']
+  - id: 'build webapp'
+    name: gcr.io/cloud-builders/docker
+    args: ['build', '-f', './app/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_app', 'app/.']
+    waitFor: ['-']
+
+  - id: 'build webroot'
+    name: gcr.io/cloud-builders/docker
+    args: ['build', '-f', './certbot/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot', 'web/.']
+    waitFor: ['build webapp']
 
   # Run the app and dependencies in the background using docker-compose.
-  - name: 'docker/compose:latest'
-    args: ['up', '-d']
-
-  # Build the Docker image.
-  - name: gcr.io/cloud-builders/docker
-    args: ['build', '-f', './app/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_app:$SHORT_SHA', '.']
-
-  - name: gcr.io/cloud-builders/docker
-    args: ['build', '-f', './certbot/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot:$SHORT_SHA', '.']
+  - id: 'compose up'
+    name: 'gcr.io/$PROJECT_ID/docker-compose:latest'
+    entrypoint: '/bin/bash'
+    args:
+    - '-c'
+    - |
+      docker-compose up -d
+    env:
+    - 'PROJECT_ID=$PROJECT_ID'
+    waitFor: ['build webapp','build webroot']
 
 images: 
-  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_app:$SHORT_SHA'
-  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot:$SHORT_SHA'
+  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_app'
+  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot'

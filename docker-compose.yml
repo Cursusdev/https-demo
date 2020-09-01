@@ -2,7 +2,7 @@ version: '3'
 services:
 
   app:
-    build: ./app
+    # build: ./app
     container_name: app
     ports:
       - "8080:8080"
@@ -14,7 +14,7 @@ services:
       - certbot-letsencrypt:/etc/letsencrypt
 
   certbot:
-    build: ./certbot
+    # build: ./certbot
     container_name: certbot
     restart: always
     volumes:
@@ -35,3 +35,8 @@ services:
 volumes:
   certbot-webroot-ethprod:
   certbot-letsencrypt:
+
+networks:
+  default:
+    external:
+      name: cloudbuild
