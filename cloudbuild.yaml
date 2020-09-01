@@ -20,7 +20,3 @@
 images: 
   - 'eu.gcr.io/$PROJECT_ID/https-nodejs_app'
   - 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot'
-
-  # Run the app and dependencies in the background using docker-compose.
-  - name: 'docker/compose:latest'
-    args: ['up', '-d']
