@@ -11,7 +11,7 @@ services:
       # - "443:443"
     restart: always
     volumes:
-      - certbot-webroot-ethprod:/app/public/.well-known
+      - certbot-webroot-gkeprod:/app/public/.well-known
       - certbot-letsencrypt:/etc/letsencrypt
 
   certbot:
@@ -20,7 +20,7 @@ services:
     image: eu.gcr.io/${PROJECT_ID}/https-nodejs_cerbot
     restart: always
     volumes:
-      - certbot-webroot-ethprod:/webroots/ethprod.xyz/.well-known
+      - certbot-webroot-gkeprod:/webroots/gkeprod.dev/.well-known
       - certbot-letsencrypt:/etc/letsencrypt
 
   # nginx:
@@ -31,11 +31,11 @@ services:
   #     - "443:443"
   #   restart: always
   #   volumes:
-  #     - certbot-webroot-ethprod:/webroots/ethprod.xyz/.well-known
+  #     - certbot-webroot-gkeprod:/webroots/gkeprod.dev/.well-known
   #     - certbot-letsencrypt:/etc/letsencrypt
 
 volumes:
-  certbot-webroot-ethprod:
+  certbot-webroot-gkeprod:
   certbot-letsencrypt:
 
 networks:

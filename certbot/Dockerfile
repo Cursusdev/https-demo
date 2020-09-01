@@ -6,7 +6,7 @@ FROM debian:jessie
 # Install cron, certbot, bash, plus any other dependencies
 RUN apt-get update \
    && apt-get install -y cron bash wget
-RUN mkdir -p /webroots/ethprod.xyz/.well-known /scripts
+RUN mkdir -p /webroots/gkeprod.dev/.well-known /scripts
 
 WORKDIR /scripts
 RUN wget https://dl.eff.org/certbot-auto
