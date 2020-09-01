@@ -11,5 +11,5 @@ RUN  apk add --update --no-cache --virtual .build-deps make bash g++ && \
      apk del .build-deps
 COPY public/ ${APPDIR}/public/
 COPY server.js ${APPDIR}/
-EXPOSE 3000
+EXPOSE 8080
 CMD ["node", "server.js"]

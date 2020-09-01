@@ -1,18 +1,20 @@
 steps:
 
+  # Build the Docker image.
+  - name: 'docker/compose:latest'
+    args: ['build']
+
   # Run the app and dependencies in the background using docker-compose.
   - name: 'docker/compose:latest'
     args: ['up', '-d']
 
   # Build the Docker image.
   - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA', '.']
-    env: ['PROJECT_ROOT=app']
-    dir: 'app'
+    args: ['build', '-f', './app/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_app:$SHORT_SHA', '.']
 
   - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA', '.']
-    env: ['PROJECT_ROOT=certbot']
-    dir: 'certbot'
+    args: ['build', '-f', './certbot/Dockerfile', '-t', 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot:$SHORT_SHA', '.']
 
-images: ['eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA']
+images: 
+  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_app:$SHORT_SHA'
+  - 'eu.gcr.io/$PROJECT_ID/https-nodejs_cerbot:$SHORT_SHA'
